@@ -8,6 +8,9 @@ const server = restify.createServer({
 })
 
 server.use(logger('dev'))
+server.use(restify.plugins.acceptParser(server.acceptable));
+server.use(restify.plugins.queryParser());
+server.use(restify.plugins.bodyParser());
 
 PrincipalRouter.applyRoutes(server)
 

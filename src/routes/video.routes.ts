@@ -1,4 +1,5 @@
 import {Router} from 'restify-router'
+import videoController from '../controllers/video.controller'
 
 const VideoRouter = new Router()
 
@@ -16,11 +17,13 @@ VideoRouter.get('/list', async(req, res)=> {
         return res.json({succes: false ,error: true, errorMesage: error?.stack})
     }
 })
-VideoRouter.get('/process/convert', async(req, res)=> {
+VideoRouter.post('/process/convert', async(req, res)=> {
     try {
-        return res.json({
+        console.log('---->>>>>>',req.body)
+        res.json({
             apiPath: 'process/convert'
         })
+        videoController.convertVideoWebmToMp4(req.body?.originUrlVideo)
     } catch (error) {
         return res.json({succes: false ,error: true, errorMesage: error?.stack})
     }
