@@ -1,3 +1,7 @@
 .env*
 node_modules*
 dist*
+#Agregados por Karina
+#yarn.lock
+package-lock.json
+inputvideo.mp4

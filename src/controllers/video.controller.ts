@@ -5,7 +5,9 @@ import { Types } from 'mongoose'
 class VIDEOCONTROLLER {
     async convertVideoWebmToMp4(originUrlVideo: string) {
         try {
-            const originUrlVideoFromLocal = `${__dirname}/inputvideo.webm`
+            //const path = require('path')
+            //const originUrlVideoFromLocal = `${__dirname}/inputvideo.webm`
+            const originUrlVideoFromLocal =require('path').join(process.cwd(),'inputvideo.webm')
             const { responseVideo } = await this.createVideoDocument(originUrlVideoFromLocal || originUrlVideo)
             const {outputPath} = await videoprocesscontroller.convert(originUrlVideoFromLocal || originUrlVideo, responseVideo?._id)
             await this.setStatusFinishToVideoDocument(responseVideo?._id, outputPath)
@@ -16,7 +18,7 @@ class VIDEOCONTROLLER {
 
     async createVideoDocument(originUrlVideo: string) {
         try {
-            console.log("🚀 ~ file: video.controller.ts ~ line 14 ~ VIDEOCONTROLLER ~ createVideoDocument ~ originUrlVideo", originUrlVideo)
+            console.log("🚀 ~ file: video.controller.ts ~ line 11 ~ VIDEOCONTROLLER ~ createVideoDocument ~ originUrlVideo", originUrlVideo)
 
             const [responseVideo] = await videoSources.create([{
                 urlStorage: originUrlVideo,

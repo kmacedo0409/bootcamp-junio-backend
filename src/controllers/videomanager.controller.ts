@@ -1,4 +1,6 @@
 import videoController from "./video.controller"
+import videoManager from "./videomanagercontroller"
+
 class VIDEOPROCESSCONTROLLER {
     // __dirname
     // fs
@@ -10,18 +12,18 @@ class VIDEOPROCESSCONTROLLER {
         try {
             await videoController.createStatusProcessVideo('download', videoId)
 
-            // const localPathVideo = await this.downloadFile(originUrlVideo)
+             const localPathVideo = await this.downloadFile(originUrlVideo)
 
             await videoController.createStatusProcessVideo('validate', videoId)
 
             // const isValidFile = await this.validateFile(localPathVideo)
 
             // if(!isValidFile) throw new Error('Error en el archivo')
-            // const outputVideoPath = await this.createOuputPath()
+            const outputVideoPath = await this.createOutputPath()
 
             await videoController.createStatusProcessVideo('convert', videoId)
 
-            // await this.convertFile(localPathVideo, outputVideoPath)
+             await this.convertFile(localPathVideo, outputVideoPath)
 
             await videoController.createStatusProcessVideo('upload', videoId)
 
@@ -41,7 +43,7 @@ class VIDEOPROCESSCONTROLLER {
     }
 
     async downloadFile(originUrlVideo: string) {
-        return '/path/download/video.webm'
+        return require('path').join(process.cwd(),'inputvideo.webm')
     }
     // ffprobe
     async validateFile(localPathVideo: string) {
@@ -50,19 +52,21 @@ class VIDEOPROCESSCONTROLLER {
         return true
     }
 
-    async createOuputPath() {
-        return ''
+    async createOutputPath() {
+        console.log('Output video:', require('path').join(process.cwd(),'inputvideo.mp4'))
+        return require('path').join(process.cwd(),'inputvideo.mp4')
     }
 
-    async convertFile(localPathVideo: string, ouputPath: string) {
+    async convertFile(localPathVideo: string, outputPath: string) {
         try {
-            // ffmpegFromSpawn(localPath, ouputPath)
+           // ffmpegFromSpawn(localPathVideo, outputPath)
+           await videoManager.changeFormatVideo(localPathVideo)
         } catch (error) {
             throw error
         }
     }
 
-    async uploadFile(ouputPath: string) {
+    async uploadFile(outputPath: string) {
         try {
             // subir el file y retornal el newOriginUrlVideoConvert
             return ''

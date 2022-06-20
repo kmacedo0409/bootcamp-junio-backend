@@ -5,7 +5,7 @@ const convertFilesWebmToMp4 = (sourceVideo: any, outputVideo: any) => new Promis
         shell: true
     }
 
-    let args = ['-fflags', '-y', '+genpts', '-i', sourceVideo, '-r', '24', outputVideo]
+    let args = ['-fflags', '+genpts', '-i', sourceVideo, '-r', '24', outputVideo]
     
     const child = spawn('ffmpeg', args, options)
 
@@ -28,7 +28,7 @@ const convertFilesWebmToMp4 = (sourceVideo: any, outputVideo: any) => new Promis
 
 class VIDEOMANAGER{ 
     async createOutputVideo() {
-        return ''
+        return require('path').join(process.cwd(),'inputvideo.mp4')
     }
     async changeFormatVideo(sourceVideo: any): Promise<string>{
         try {
